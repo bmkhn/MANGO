@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Internal Sidebar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> 
+<style>
+	body {
+		margin: 0;
+		font-family: Arial, sans-serif;
+	}
+
+	.sidebar-container {
+		width: 250px;
+		min-height: 100vh;
+		padding: 20px;
+		border-top-right-radius: 20px;
+		border-bottom-right-radius: 20px;
+		background-color: #063A1C;
+		color: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.sidebar-logo {
+		display: flex;
+		align-items: center;
+		margin-bottom: 40px;
+	}
+
+	.sidebar-logo-circle {
+		width: 50px;
+		height: 50px;
+		background-color: white;
+		border-radius: 50%;
+		margin-right: 15px;
+	}
+
+	.sidebar-logo-text {
+		font-family: 'Instrument Sans', sans-serif;
+		font-size: 16px;
+		font-weight: 1000;
+		vertical-align: middle;
+	}
+
+	.sidebar-tab-group-label {
+		font-family: 'Inter', sans-serif;
+		font-size: 16px;
+		font-weight: regular;
+		margin-bottom: 20px;
+	}
+
+	.sidebar-tabs {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.sidebar-tab {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: white;
+		padding: 10px;
+		border-radius: 10px;
+		transition: background-color 0.2s ease;
+	}
+
+	.sidebar-tab:hover {
+		background-color: #052C15;
+	}
+
+	.sidebar-tab-icon {
+		width: 35px;
+		height: 35px;
+		background-color: white;
+		border-radius: 50%;
+		margin-right: 15px;
+	}
+
+	.sidebar-logout {
+		padding-top: 20px;
+	}
+
+	.table-text {
+		font-family: 'Inter', sans-serif;
+		font-size: 22px;
+		font-weight: bold;
+	}
+
+</style>
+</head>
+<body>
+<div class="sidebar-container">
+	<!-- Logo Container -->
+	<div class="sidebar-logo">
+		<div class="sidebar-logo-circle"></div>
+		<span class="sidebar-logo-text">University Extensions<br>Services Office</span>
+	</div>
+
+	<!-- Tabs -->
+	<div class="sidebar-tabs">
+
+		<!-- General Section -->
+		<div class="sidebar-tab-group-label">GENERAL</div>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Dashboard</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Projects</span>
+		</a>
+		
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Submission</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Experts</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Calendar</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Analytics</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Goals</span>
+		</a>
+
+		<!-- Content Section -->
+		<div class="sidebar-tab-group-label">CONTENT</div>
+		
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Announcements</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Archive</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Budget</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">About Us</span>
+		</a>
+	
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Downloadables</span>
+		</a>
+
+		<!-- Other Section -->
+		<div class="sidebar-tab-group-label">OTHER</div>
+		
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Manage User</span>
+		</a>	
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Logs</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Inbox</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Notification</span>
+		</a>
+
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Settings</span>
+		</a>
+	
+	</div>
+
+	<!-- Logout -->
+	<div class="sidebar-logout">
+		<a href="#" class="sidebar-tab">
+		<div class="sidebar-tab-icon"></div>
+		<span class="table-text">Log Out</span>
+		</a>
+	</div>
+</div>
+</body>
+</html>
