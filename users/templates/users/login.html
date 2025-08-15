@@ -4,3 +4,13 @@
     {{ form.as_p }}
     <button type="submit">Login</button>
 </form>
+
+
+<h3>Quick Login (Test Users)</h3>
+<a href="{% url 'quick_login' role='PUBLIC' %}" class="btn btn-secondary">Login as Public</a>
+<a href="{% url 'quick_login' role='FACULTY' %}" class="btn btn-secondary">Login as Faculty</a>
+<a href="{% url 'quick_login' role='CLIENT' %}" class="btn btn-secondary">Login as Client</a>
+<a href="{% url 'quick_login' role='UESO' %}" class="btn btn-secondary">Login as UESO</a>
+<a href="{% url 'quick_login' role='DEAN' %}" class="btn btn-secondary">Login as College Dean</a>
+<a href="{% url 'quick_login' role='COORDINATOR' %}" class="btn btn-secondary">Login as College Coordinator</a>
+<a href="{% url 'quick_login' role='VP' %}" class="btn btn-secondary">Login as Director/VP</a>
