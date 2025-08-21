@@ -5,12 +5,15 @@
     <button type="submit">Login</button>
 </form>
 
-
+<br>
 <h3>Quick Login (Test Users)</h3>
 <a href="{% url 'quick_login' role='PUBLIC' %}" class="btn btn-secondary">Login as Public</a>
 <a href="{% url 'quick_login' role='FACULTY' %}" class="btn btn-secondary">Login as Faculty</a>
 <a href="{% url 'quick_login' role='CLIENT' %}" class="btn btn-secondary">Login as Client</a>
+<br>
 <a href="{% url 'quick_login' role='UESO' %}" class="btn btn-secondary">Login as UESO</a>
-<a href="{% url 'quick_login' role='DEAN' %}" class="btn btn-secondary">Login as College Dean</a>
 <a href="{% url 'quick_login' role='COORDINATOR' %}" class="btn btn-secondary">Login as College Coordinator</a>
-<a href="{% url 'quick_login' role='VP' %}" class="btn btn-secondary">Login as Director/VP</a>
+<a href="{% url 'quick_login' role='DEAN' %}" class="btn btn-secondary">Login as College Dean</a>
+<a href="{% url 'quick_login' role='PROGRAM_HEAD' %}" class="btn btn-secondary">Login as Program Head</a>
+<a href="{% url 'quick_login' role='DIRECTOR' %}" class="btn btn-secondary">Login as Director</a>
+<a href="{% url 'quick_login' role='VP' %}" class="btn btn-secondary">Login as VP</a>

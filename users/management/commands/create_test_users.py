@@ -21,7 +21,7 @@ class Command(BaseCommand):
                     middle_initial="T",
                     last_name="User",
                     sex=User.Sex.MALE,
-                    contact_no="09123456789",
+                    contact_no="0999999999",
                     campus=User.Campus.MAIN,
                     role=role,
                 )

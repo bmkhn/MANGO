@@ -11,10 +11,11 @@
 	body {
 		margin: 0;
 		font-family: Arial, sans-serif;
+		display: flex;
 	}
 
     .sidebar-container {
-		width: 295px;
+		width: 250px;
 		min-height: 100vh;
 		padding: 20px;
 		background-color: #063A1C;
@@ -24,22 +25,25 @@
 		justify-content: space-between;
 		border-top-right-radius: 20px;
 		border-bottom-right-radius: 20px;
-		transition: width 0.3s ease;
+		transition: width 0.2s ease;
 		overflow: hidden;
+		position: relative;
     }
 
     .sidebar-container.collapsed {
 		width: 55px;
     }
 
-    .toggle-button {
-		background-color: transparent;
-		border: none;
-		color: white;
-		margin-left: 10px;
-		font-size: 25px;
-		cursor: pointer;
-    }
+	/* Drag handle */
+	.resize-handle {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 8px;
+		cursor: ew-resize;
+		background: transparent;
+		height: 100%;
+	}
 
     .sidebar-logo {
 		display: flex;
@@ -53,7 +57,7 @@
 		height: 40px;
 		background-color: white;
 		border-radius: 50%;
-		margin-left: 15px;
+		margin-left: 7px;
 		margin-right: 15px;
 		flex-shrink: 0;
 		align-items: center;
@@ -62,17 +66,16 @@
     .sidebar-logo-text {
 		font-family: 'Instrument Sans', sans-serif;
 		font-size: 16px;
-		font-weight: 700;
+		font-weight: 800;
 		display: inline-block;
     }
 
-    .sidebar-container.collapsed .sidebar-tab-group-label,
-	.sidebar-container.collapsed .sidebar-logo-circle {
+    /* Hide elements properly when collapsed */
+    .sidebar-container.collapsed .sidebar-tab-group-label {
     	visibility: hidden;
     }
 
     .sidebar-container.collapsed .sidebar-logo-text,
-	.sidebar-container.collapsed .table-text,
 	.sidebar-container.collapsed .table-text {
     	display: none;
     }
@@ -80,6 +83,7 @@
     .sidebar-tab-group-label {
 		font-family: 'Inter', sans-serif;
 		font-size: 16px;
+		padding: 10px 0;
     }
 
     .sidebar-tabs {
@@ -126,11 +130,13 @@
 
 <body>
 	<div class="sidebar-container" id="sidebar">
+		<!-- Drag handle -->
+		<div class="resize-handle"></div>
+
 		<!-- Logo Container -->
 		<div class="sidebar-logo">
-			<button class="toggle-button" onclick="toggleSidebar()">☰</button>
 			<div class="sidebar-logo-circle"></div>
-			<span class="sidebar-logo-text">University Extensions<br>Services Office</span>
+			<span class="sidebar-logo-text">University Extension<br>Services Office</span>
 		</div>
 
 		<!-- Tabs -->
@@ -217,9 +223,56 @@
 	</div>
 
 	<script>
-		function toggleSidebar() {
-			document.querySelector('.sidebar-container').classList.toggle('collapsed');
-		}
+		const sidebar = document.getElementById("sidebar");
+		const handle = sidebar.querySelector(".resize-handle");
+
+		let isDragging = false;
+		let startX = 0;
+		let startWidth = 0;
+
+		const expandedWidth = 250;
+		const collapsedWidth = 55;
+		const dragTolerance = 10; // how sensitive a "tap" vs drag is
+
+		handle.addEventListener("mousedown", (e) => {
+			isDragging = true;
+			startX = e.clientX;
+			startWidth = sidebar.offsetWidth;
+			document.body.style.cursor = "ew-resize";
+		});
+
+		document.addEventListener("mouseup", (e) => {
+			if (!isDragging) return;
+			isDragging = false;
+			document.body.style.cursor = "default";
+
+			const diff = e.clientX - startX;
+
+			// If tap or small drag → auto toggle
+			if (Math.abs(diff) < dragTolerance) {
+				if (sidebar.classList.contains("collapsed")) {
+					sidebar.classList.remove("collapsed");
+					sidebar.style.width = expandedWidth + "px";
+				} else {
+					sidebar.classList.add("collapsed");
+					sidebar.style.width = collapsedWidth + "px";
+				}
+				return;
+			}
+
+			// If actual drag → snap based on final X
+			if (e.clientX < 150) {
+				sidebar.classList.add("collapsed");
+				sidebar.style.width = collapsedWidth + "px";
+			} else {
+				sidebar.classList.remove("collapsed");
+				sidebar.style.width = expandedWidth + "px";
+			}
+		});
 	</script>
 </body>
 </html>
+
+
+
+
