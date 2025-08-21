@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users',  # Custom User App
+    'calendar_app',  # Calendar App
 ]
 
 MIDDLEWARE = [

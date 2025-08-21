@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from users.views import login_view, logout_view, register_view, quick_login, role_redirect, dashboard_basic, dashboard_admin
+from calendar_app.views import calendar_page, add_event, get_events
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,13 @@ urlpatterns = [
     path('redirector/', role_redirect, name='role_redirect'),
     path('dashboard/basic/', dashboard_basic, name='dashboard_basic'),
     path('dashboard/admin/', dashboard_admin, name='dashboard_admin'),
+
+
+    # Calendar App URLs     (Not Yet User Locked)
+    path('calendar/', calendar_page, name='calendar_page'),
+    path('api/events/add/', add_event, name='add_event'),
+    path('api/events/', get_events, name='get_events'),
+
 
 
     path('quick-login/<str:role>/', quick_login, name='quick_login'),       # Quick Login URL (For Testing Purposes)

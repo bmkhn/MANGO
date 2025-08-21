@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Calendar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: 'Inter', sans-serif;
+		background: #fff;
+	}
+
+	/* --- MAIN CONTAINER --- */
+	#calendar-wrapper {
+		display: flex;
+		width: 100%;
+		min-height: 100vh;
+		background: white;
+	}
+
+	/* --- MONTH CONTAINER (LEFT SIDEBAR) --- */
+	#calendar-sidebar-left {
+		width: 328px;
+		background: #D9D9D9;
+		padding-top: 30px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 25px;
+		box-sizing: border-box;
+	}
+
+	/* My Calendar text */
+	#calendar-sidebar-left h2 {
+		font-size: 24px;
+		font-weight: 400; /* Inter Regular */
+		text-align: center;
+		margin: 0;
+	}
+
+	/* Year dropdown */
+	#year-selector {
+		font-size: 24px;
+		font-weight: 500; /* Inter Medium */
+		padding: 5px 10px;
+		border-radius: 6px;
+		border: none;
+		background: #fff;
+		cursor: pointer;
+	}
+
+	/* Month list */
+		#month-selector {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		box-sizing: border-box;
+		list-style: none;   /* removes bullets */
+		margin: 0;          /* removes default outer spacing */
+		padding: 0;         /* removes default inner spacing */
+	}
+
+	#month-selector li {
+		font-size: 16px;
+		font-weight: 300; /* Inter Light */
+		text-align: left;
+		cursor: pointer;
+		padding: 20px 0 20px 40px;
+		border-top: 0.8px solid rgba(0, 0, 0, 0.5); /* Top border */
+	}
+
+	#month-selector li:hover {
+		background: #bfbfbf;
+	}
+
+	#month-selector li.active {
+		background: #1A1A1A;
+		color: white;
+	}
+
+
+	/* --- CALENDAR CONTAINER (CENTER) --- */
+		#calendar-container {
+		flex-grow: 1;
+		padding: 20px;
+	}
+
+	#calendar {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 5px;
+	}
+
+	.calendar-day {
+		border: 1px solid #ccc;
+		padding: 10px;
+		min-height: 60px;
+		cursor: pointer;
+	}
+
+	.calendar-day:hover {
+		background: #f0f0f0;
+	}
+
+	/* --- EVENT CONTAINER (RIGHT SIDEBAR) --- */
+	#calendar-sidebar-right {
+		width: 293px;
+		background: #1A1A1A;
+		color: white;
+		padding: 40px;
+		box-sizing: border-box;
+	}
+
+	#calendar-sidebar-right h2 {
+		font-size: 30px;
+		font-weight: 500; /* Inter Medium */
+		margin-bottom: 25px;
+	}
+
+	#event-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	#event-list li {
+		margin-bottom: 25px;
+	}
+
+	#event-list h3 {
+		font-size: 15px;
+		font-weight: 500;
+		margin: 0;
+	}
+
+	#event-list h4 {
+		font-size: 20px;
+		font-weight: 500;
+		margin: 5px 0 0 15px; /* indented for bullet effect */
+		position: relative;
+	}
+
+	#event-list h4::before {
+		content: "•";
+		position: absolute;
+		left: -15px;
+		color: #fff;
+	}
+
+	/* --- MODAL --- */
+	.modal {
+		position: fixed;
+		top: 0; left: 0;
+		width: 100%; height: 100%;
+		background: rgba(0,0,0,0.5);
+		display: none;
+		justify-content: center;
+		align-items: center;
+		z-index: 10;
+	}
+
+	.modal-content {
+		background: white;
+		padding: 20px;
+		border-radius: 8px;
+		width: 300px;
+	}
+
+	.modal-content input,
+	.modal-content textarea {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+</style>
+</head>
+<body>
+<div id="calendar-wrapper">
+  <!-- Month Container (Left Sidebar) -->
+  <div id="calendar-sidebar-left">
+    <h2>My Calendar</h2>
+    <select id="year-selector"></select>
+    <ul id="month-selector">
+      <li data-month="0">January</li>
+      <li data-month="1">February</li>
+      <li data-month="2">March</li>
+      <li data-month="3">April</li>
+      <li data-month="4">May</li>
+      <li data-month="5">June</li>
+      <li data-month="6">July</li>
+      <li data-month="7">August</li>
+      <li data-month="8">September</li>
+      <li data-month="9">October</li>
+      <li data-month="10">November</li>
+      <li data-month="11">December</li>
+    </ul>
+  </div>
+
+  <!-- Calendar Container (Center) -->
+  <div id="calendar-container">
+    <div id="calendar"></div>
+  </div>
+
+  <!-- Event Container (Right Sidebar) -->
+  <div id="calendar-sidebar-right">
+    <h2>Events</h2>
+    <ul id="event-list">
+      <li>
+        <h3>Date: 2025-08-21</h3>
+        <h4>• Sample Event</h4>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal for Adding Event -->
+<div id="event-form-modal" class="modal">
+  <div class="modal-content">
+    <h3>Add Event</h3>
+    <form id="event-form">
+      <label>Title: <input type="text" name="title" required></label>
+      <label>Date: <input type="text" name="date" readonly></label>
+      <label>Time: <input type="time" name="time"></label>
+      <label>Location: <input type="text" name="location"></label>
+      <label>Members: <input type="text" name="members" placeholder="Just placeholder"></label>
+      <label>Notes: <textarea name="notes"></textarea></label>
+      <button type="submit">Save</button>
+      <button type="button" id="cancel-modal">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script>
+    const calendar = document.getElementById('calendar');
+    const eventList = document.getElementById('event-list');
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
+    let selectedDate = null;
+
+    // Populate year dropdown
+    const yearSelector = document.getElementById('year-selector');
+    for (let y = 2020; y <= 2030; y++) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        if (y === currentYear) opt.selected = true;
+        yearSelector.appendChild(opt);
+    }
+
+    // Month click
+    document.querySelectorAll('#month-selector li').forEach(li => {
+        li.onclick = () => {
+            currentMonth = parseInt(li.dataset.month);
+            renderCalendar(currentYear, currentMonth);
+            fetchEvents();
+            document.querySelectorAll('#month-selector li').forEach(l => l.classList.remove('active'));
+            li.classList.add('active');
+        };
+    });
+
+    yearSelector.onchange = () => {
+        currentYear = parseInt(yearSelector.value);
+        renderCalendar(currentYear, currentMonth);
+        fetchEvents();
+    };
+
+    function renderCalendar(year, month) {
+        calendar.innerHTML = '';
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+            const empty = document.createElement('div');
+            calendar.appendChild(empty);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const cell = document.createElement('div');
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            cell.className = 'calendar-day';
+            cell.textContent = d;
+            cell.dataset.date = dateStr;
+            calendar.appendChild(cell);
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('calendar-day')) {
+            selectedDate = e.target.dataset.date;
+            document.querySelector('#event-form [name="date"]').value = selectedDate;
+            document.getElementById('event-form-modal').style.display = 'flex';
+        }
+    });
+
+    document.getElementById('cancel-modal').onclick = () => {
+        document.getElementById('event-form-modal').style.display = 'none';
+    };
+
+    document.getElementById('event-form').onsubmit = function(e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(this).entries());
+
+        fetch('/api/events/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({
+                title: data.title,
+                date: data.date,
+                location: data.location,
+                notes: data.notes
+            })
+        })
+        .then(res => res.json())
+        .then(resp => {
+            if (resp.status === 'success') {
+                document.getElementById('event-form-modal').style.display = 'none';
+                fetchEvents();
+            } else {
+                alert('Error: ' + JSON.stringify(resp.errors));
+            }
+        });
+    };
+
+    function fetchEvents() {
+        fetch(`/api/events/?year=${currentYear}&month=${currentMonth + 1}`)
+            .then(r => r.json())
+            .then(data => {
+                eventList.innerHTML = '';
+                if (data.length === 0) {
+                    eventList.innerHTML = '<li>No events this month.</li>';
+                } else {
+                    data.forEach(ev => {
+                        const li = document.createElement('li');
+                        li.textContent = `${ev.title} (${ev.start}) at ${ev.location}`;
+                        eventList.appendChild(li);
+                    });
+                }
+            });
+    }
+
+    function getCSRFToken() {
+        let value = "; " + document.cookie;
+        let parts = value.split("; csrftoken=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    // Initial render
+    renderCalendar(currentYear, currentMonth);
+    fetchEvents();
+</script>
+
+</body>
+</html>
+
+
+
+
