@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Internal Sidebar</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -28,6 +29,7 @@
 		transition: width 0.2s ease;
 		overflow: hidden;
 		position: relative;
+		z-index: 20;
     }
 
     .sidebar-container.collapsed {
@@ -125,6 +127,43 @@
 		font-size: 22px;
 		font-weight: bold;
     }
+
+	/* 🔹 Top Bar */
+	.topbar {
+		position: fixed;
+		top: 0;
+		left: 250px; /* aligned with sidebar width */
+		right: 0;
+		height: 80px;
+		background-color: #F9F9F9;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* 30% opacity */
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		padding: 0 30px;
+		box-sizing: border-box;
+		gap: 30px; /* spacing between buttons */
+		transition: left 0.2s ease;
+		z-index: 10;
+	}
+
+	.sidebar-container.collapsed ~ .topbar {
+		left: 55px; /* shift when sidebar collapses */
+	}
+
+	.topbar button {
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+		background-color: #063A1C;
+		border: none;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.topbar button:hover {
+		background-color: #052C15;
+	}
 </style>
 </head>
 
@@ -160,7 +199,7 @@
 				<div class="sidebar-tab-icon"></div>
 				<span class="table-text">Experts</span>
 			</a>
-			<a href="#" class="sidebar-tab">
+			<a href="{% url 'calendar_page' %}" class="sidebar-tab">
 				<div class="sidebar-tab-icon"></div>
 				<span class="table-text">Calendar</span>
 			</a>
@@ -212,6 +251,13 @@
 				<span class="table-text">Log Out</span>
 			</a>
 		</div>
+	</div>
+
+	<!-- 🔹 Topbar -->
+	<div class="topbar">
+		<button></button>
+		<button></button>
+		<button></button>
 	</div>
 
 	<script>
