@@ -36,7 +36,6 @@
 		width: 55px;
     }
 
-	/* Drag handle */
 	.resize-handle {
 		position: absolute;
 		top: 0;
@@ -74,8 +73,7 @@
 		display: inline-block;
     }
 
-    /* Hide elements properly when collapsed */
-    .sidebar-container.collapsed .sidebar-tab-group-label {
+	.sidebar-container.collapsed .sidebar-tab-group-label {
     	visibility: hidden;
     }
 
@@ -87,6 +85,7 @@
     .sidebar-tab-group-label {
 		font-family: 'Inter', sans-serif;
 		font-size: 16px;
+		font-weight: 400;
 		padding: 10px 0;
     }
 
@@ -121,29 +120,37 @@
 		flex-shrink: 0;
     }
 
-	.ueso-icon { background-image: url("icons/ueso.png"); }
-	.dashboard-icon { background-image: url("icons/dashboard.png"); }
-	.projects-icon { background-image: url("icons/projects.png"); }
-	.submission-icon { background-image: url("icons/submission.png"); }
-	.experts-icon { background-image: url("icons/experts.png"); }
-	.calendar-icon { background-image: url("icons/calendar.png"); }
-	.analytics-icon { background-image: url("icons/analytics.png"); }
-	.goals-icon { background-image: url("icons/goals.png"); }
-	.announcements-icon { background-image: url("icons/announcements.png"); }
-	.archive-icon { background-image: url("icons/archive.png"); }
-	.budget-icon { background-image: url("icons/budget.png"); }
-	.aboutus-icon { background-image: url("icons/aboutus.png"); }
-	.downloadables-icon { background-image: url("icons/downloadables.png"); }
-	.manageuser-icon { background-image: url("icons/manageuser.png"); }
-	.logs-icon { background-image: url("icons/logs.png"); }
-	.inbox-icon { background-image: url("icons/inbox.png"); }
-	.notification-icon { background-image: url("icons/notification.png"); }
-	.settings-icon { background-image: url("icons/settings.png"); }
-	.logout-icon { background-image: url("icons/logout.png"); }
+	.ueso-icon            { background-image: url("icons/ueso.png"); }
+	.dashboard-icon       { background-image: url("icons/dashboard.png"); }
+	.projects-icon        { background-image: url("icons/projects.png"); }
+	.submission-icon      { background-image: url("icons/submission.png"); }
+	.experts-icon         { background-image: url("icons/experts.png"); }
+	.calendar-icon        { background-image: url("icons/calendar.png"); }
+	.analytics-icon       { background-image: url("icons/analytics.png"); }
+	.goals-icon           { background-image: url("icons/goals.png"); }
+	.announcements-icon   { background-image: url("icons/announcements.png"); }
+	.archive-icon         { background-image: url("icons/archive.png"); }
+	.budget-icon          { background-image: url("icons/budget.png"); }
+	.aboutus-icon         { background-image: url("icons/aboutus.png"); }
+	.downloadables-icon   { background-image: url("icons/downloadables.png"); }
+	.manageuser-icon      { background-image: url("icons/manageuser.png"); }
+	.logs-icon            { background-image: url("icons/logs.png"); }
+	.inbox-icon           { background-image: url("icons/inbox.png"); }
+	.notification-icon    { background-image: url("icons/notification.png"); }
+	.settings-icon        { background-image: url("icons/settings.png"); }
+	.logout-icon          { background-image: url("icons/logout.png"); }
 
     .sidebar-logout {
       	padding-top: 20px;
     }
+
+	.sidebar-container.collapsed ~ .topbar {
+		left: 55px; 
+	}
+
+	.sidebar-tab.active {
+    	background-color: #052C15;
+	}
 
     .table-text {
 		font-family: 'Inter', sans-serif;
@@ -170,27 +177,21 @@
 		z-index: 10;
 	}
 
-	.sidebar-container.collapsed ~ .topbar {
-		left: 55px; 
-	}
+	.topbar-button {
+		width: 30px;
+		height: 30px;
 
-	.topbar button {
-		width: 45px;
-		height: 45px;
-		border-radius: 50%;
-		background-color: #063A1C;
-		border: none;
-		cursor: pointer;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
 		transition: background 0.2s;
 	}
 
-	.topbar button:hover {
-		background-color: #052C15;
-	}
+	.topbar-notification-icon 	{ background-image: url("icons/topbar-notification.png"); }
+	.topbar-settings-icon 		{ background-image: url("icons/topbar-settings.png"); }
+	.topbar-profile-icon 		{ background-color: black; }
 
-	.sidebar-tab.active {
-    	background-color: #052C15;
-	}
+
 
 </style>
 </head>
@@ -300,9 +301,9 @@
 
 	<!-- 🔹 Topbar -->
 	<div class="topbar">
-		<button></button>
-		<button></button>
-		<button></button>
+		<div class="topbar-button topbar-notification-icon"></div>
+		<div class="topbar-button topbar-settings-icon"></div>
+		<div class="topbar-button topbar-profile-icon"></div>
 	</div>
 </body>
 
