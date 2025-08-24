@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Internal Sidebar</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -28,6 +29,7 @@
 		transition: width 0.2s ease;
 		overflow: hidden;
 		position: relative;
+		z-index: 20;
     }
 
     .sidebar-container.collapsed {
@@ -125,6 +127,48 @@
 		font-size: 22px;
 		font-weight: bold;
     }
+
+	/* Top Bar */
+	.topbar {
+		position: fixed;
+		top: 0;
+		left: 250px; 
+		right: 0;
+		height: 80px;
+		background-color: #F9F9F9;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		padding: 0 30px;
+		box-sizing: border-box;
+		gap: 30px;
+		transition: left 0.2s ease;
+		z-index: 10;
+	}
+
+	.sidebar-container.collapsed ~ .topbar {
+		left: 55px; 
+	}
+
+	.topbar button {
+		width: 45px;
+		height: 45px;
+		border-radius: 50%;
+		background-color: #063A1C;
+		border: none;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.topbar button:hover {
+		background-color: #052C15;
+	}
+
+	.sidebar-tab.active {
+    	background-color: #052C15;
+	}
+
 </style>
 </head>
 
@@ -222,57 +266,84 @@
 		</div>
 	</div>
 
-	<script>
-		const sidebar = document.getElementById("sidebar");
-		const handle = sidebar.querySelector(".resize-handle");
+	<!-- 🔹 Topbar -->
+	<div class="topbar">
+		<button></button>
+		<button></button>
+		<button></button>
+	</div>
+</body>
 
-		let isDragging = false;
-		let startX = 0;
-		let startWidth = 0;
+<script>
+	const sidebar = document.getElementById("sidebar");
+	const handle = sidebar.querySelector(".resize-handle");
 
-		const expandedWidth = 250;
-		const collapsedWidth = 55;
-		const dragTolerance = 10; // how sensitive a "tap" vs drag is
+	let isDragging = false;
+	let startX = 0;
+	let startWidth = 0;
 
-		handle.addEventListener("mousedown", (e) => {
-			isDragging = true;
-			startX = e.clientX;
-			startWidth = sidebar.offsetWidth;
-			document.body.style.cursor = "ew-resize";
-		});
+	const expandedWidth = 250;
+	const collapsedWidth = 55;
+	const dragTolerance = 10; // how sensitive a "tap" vs drag is
 
-		document.addEventListener("mouseup", (e) => {
-			if (!isDragging) return;
-			isDragging = false;
-			document.body.style.cursor = "default";
+	handle.addEventListener("mousedown", (e) => {
+		isDragging = true;
+		startX = e.clientX;
+		startWidth = sidebar.offsetWidth;
+		document.body.style.cursor = "ew-resize";
+	});
 
-			const diff = e.clientX - startX;
+	document.addEventListener("mouseup", (e) => {
+		if (!isDragging) return;
+		isDragging = false;
+		document.body.style.cursor = "default";
 
-			// If tap or small drag → auto toggle
-			if (Math.abs(diff) < dragTolerance) {
-				if (sidebar.classList.contains("collapsed")) {
-					sidebar.classList.remove("collapsed");
-					sidebar.style.width = expandedWidth + "px";
-				} else {
-					sidebar.classList.add("collapsed");
-					sidebar.style.width = collapsedWidth + "px";
-				}
-				return;
-			}
+		const diff = e.clientX - startX;
 
-			// If actual drag → snap based on final X
-			if (e.clientX < 150) {
-				sidebar.classList.add("collapsed");
-				sidebar.style.width = collapsedWidth + "px";
-			} else {
+		// If tap or small drag → auto toggle
+		if (Math.abs(diff) < dragTolerance) {
+			if (sidebar.classList.contains("collapsed")) {
 				sidebar.classList.remove("collapsed");
 				sidebar.style.width = expandedWidth + "px";
+			} else {
+				sidebar.classList.add("collapsed");
+				sidebar.style.width = collapsedWidth + "px";
+			}
+			return;
+		}
+
+		// If actual drag → snap based on final X
+		if (e.clientX < 150) {
+			sidebar.classList.add("collapsed");
+			sidebar.style.width = collapsedWidth + "px";
+		} else {
+			sidebar.classList.remove("collapsed");
+			sidebar.style.width = expandedWidth + "px";
+		}
+	});
+
+
+	const sidebarTabs = document.querySelectorAll('.sidebar-tab');
+
+	const activeTabId = localStorage.getItem('activeSidebarTab');
+	if(activeTabId){
+		sidebarTabs.forEach(tab => {
+			tab.classList.remove('active');
+			if(tab.dataset.tabId === activeTabId){
+				tab.classList.add('active');
 			}
 		});
-	</script>
-</body>
+	}
+
+	sidebarTabs.forEach((tab, idx) => {
+		tab.dataset.tabId = idx; // assign a unique ID
+		tab.addEventListener('click', () => {
+			sidebarTabs.forEach(t => t.classList.remove('active'));
+			tab.classList.add('active');
+			localStorage.setItem('activeSidebarTab', tab.dataset.tabId);
+		});
+	});
+
+</script>
+
 </html>
-
-
-
-
